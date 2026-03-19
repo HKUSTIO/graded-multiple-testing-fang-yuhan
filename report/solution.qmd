@@ -7,24 +7,26 @@ format:
 
 This report documents your implementation of multiple-testing analysis for FWER and FDR control.
 
-Run `python scripts/run_pipeline.py` from the project root. The pipeline must first map `input` to `cleaned` and then map `cleaned` to `output`. Use `output/results.json` to populate the following tables.
+Run `uv run python scripts/run_pipeline.py` from the project root (or run `scripts/run_cleaning.py` then `scripts/run_analysis.py`). The pipeline writes `cleaned/*.csv` and `output/results.json`. The tables below match the current `output/results.json` from that run.
 
 ## 2. FWER control
 
 | method | estimated_fwer |
 |---|---:|
-| uncorrected | |
-| bonferroni | |
-| holm | |
+| uncorrected | 0.9583 |
+| bonferroni | 0.0417 |
+| holm | 0.0417 |
 
 ## 3. FDR and power
 
 | method | estimated_fdr | estimated_power |
 |---|---:|---:|
-| uncorrected | | |
-| benjamini_hochberg | | |
-| benjamini_yekutieli | | |
+| uncorrected | 0.1768 | 0.6167 |
+| benjamini_hochberg | 0.0223 | 0.2889 |
+| benjamini_yekutieli | 0.0049 | 0.1100 |
 
 ## 4. Brief interpretation
 
 FWER corrections reduce false family-level discoveries under the complete null. FDR procedures target expected false-discovery share and usually preserve more power than strict family-wise controls.
+
+In these simulations, uncorrected testing shows very high FWER under the complete null (about 0.96), while Bonferroni and Holm bring it down to roughly the nominal significance level (about 0.042). On the mixed alternative, uncorrected inference yields the highest FDR and power; Benjamini–Hochberg lowers FDR with moderate power loss; Benjamini–Yekutieli is the most conservative on FDR here with the lowest power.
